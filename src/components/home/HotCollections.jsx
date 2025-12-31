@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from "keen-slider/react";
+import Skeleton from "../UI/Skeleton";
 
 const WheelControls = (slider) => {
   let touchTimeout
@@ -65,6 +66,7 @@ const WheelControls = (slider) => {
 }
 
 const HotCollections = () => {
+  const [loading, setLoading] = useState(true); // 
   const [sliderRef] = useKeenSlider(
     {
       loop: true,
@@ -94,6 +96,33 @@ const HotCollections = () => {
       WheelControls
     ]
   )
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const SkeletonCard = () => (
+    <div className="keen-slider__slide" style={{minWidth: '25%'}}>
+      <div className="nft_coll">
+        <div className="nft_wrap">
+          <Skeleton width="100%" height="200px" />
+        </div>
+        <div className="nft_coll_pp">
+          <Skeleton width="50px" height="50px" borderRadius="50%" />
+        </div>
+        <div className="nft_coll_info">
+          <Skeleton width="80%" height="18px" />
+          <div style={{height: '8px'}}></div>
+          <Skeleton width="40%" height="14px" />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <section id="section-collections" className="no-bottom">
       <div className="container">
@@ -106,29 +135,35 @@ const HotCollections = () => {
           </div>
           <div className="col-lg-12">
             <div ref={sliderRef} className="keen-slider" style={{overflow: 'visible'}}>
-              {new Array(4).fill(0).map((_, index) => (
-                <div className="keen-slider__slide" style={{minWidth: '25%'}} key={index}>
-                  <div className="nft_coll">
-                    <div className="nft_wrap">
-                      <Link to="/item-details">
-                        <img src={nftImage} className="lazy img-fluid" alt="" />
-                      </Link>
-                    </div>
-                    <div className="nft_coll_pp">
-                      <Link to="/author">
-                        <img className="lazy pp-coll" src={AuthorImage} alt="" />
-                      </Link>
-                      <i className="fa fa-check"></i>
-                    </div>
-                    <div className="nft_coll_info">
-                      <Link to="/explore">
-                        <h4>Pinky Ocean</h4>
-                      </Link>
-                      <span>ERC-192</span>
+              {loading ? (
+                new Array(4).fill(0).map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))
+              ) : (
+                new Array(4).fill(0).map((_, index) => (
+                  <div className="keen-slider__slide" style={{minWidth: '25%'}} key={index}>
+                    <div className="nft_coll">
+                      <div className="nft_wrap">
+                        <Link to="/item-details">
+                          <img src={nftImage} className="lazy img-fluid" alt="" />
+                        </Link>
+                      </div>
+                      <div className="nft_coll_pp">
+                        <Link to="/author">
+                          <img className="lazy pp-coll" src={AuthorImage} alt="" />
+                        </Link>
+                        <i className="fa fa-check"></i>
+                      </div>
+                      <div className="nft_coll_info">
+                        <Link to="/explore">
+                          <h4>Pinky Ocean</h4>
+                        </Link>
+                        <span>ERC-192</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
