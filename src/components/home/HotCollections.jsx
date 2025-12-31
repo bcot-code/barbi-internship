@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from "keen-slider/react";
 import Skeleton from "../UI/Skeleton";
@@ -66,7 +64,9 @@ const WheelControls = (slider) => {
 }
 
 const HotCollections = () => {
-  const [loading, setLoading] = useState(true); // 
+  const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [sliderRef] = useKeenSlider(
     {
       loop: true,
@@ -98,11 +98,19 @@ const HotCollections = () => {
   )
 
   useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
+    const fetchCollections = async () => {
+      try {
+        const response = await fetch('https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections');
+        const data = await response.json();
+        setCollections(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchCollections();
   }, []);
 
   const SkeletonCard = () => (
@@ -139,26 +147,30 @@ const HotCollections = () => {
                 new Array(4).fill(0).map((_, index) => (
                   <SkeletonCard key={index} />
                 ))
+              ) : error ? (
+                <div className="text-center" style={{padding: '40px'}}>
+                  <p style={{color: 'red'}}>Error loading collections: {error}</p>
+                </div>
               ) : (
-                new Array(4).fill(0).map((_, index) => (
+                collections.map((collection, index) => (
                   <div className="keen-slider__slide" style={{minWidth: '25%'}} key={index}>
                     <div className="nft_coll">
                       <div className="nft_wrap">
                         <Link to="/item-details">
-                          <img src={nftImage} className="lazy img-fluid" alt="" />
+                          <img src={collection.backgroundImage} className="lazy img-fluid" alt="" />
                         </Link>
                       </div>
                       <div className="nft_coll_pp">
                         <Link to="/author">
-                          <img className="lazy pp-coll" src={AuthorImage} alt="" />
+                          <img className="lazy pp-coll" src={collection.profileImage} alt="" />
                         </Link>
                         <i className="fa fa-check"></i>
                       </div>
                       <div className="nft_coll_info">
                         <Link to="/explore">
-                          <h4>Pinky Ocean</h4>
+                          <h4>{collection.name}</h4>
                         </Link>
-                        <span>ERC-192</span>
+                        <span>{collection.symbol}</span>
                       </div>
                     </div>
                   </div>
