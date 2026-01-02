@@ -3,3 +3,7 @@ node_modules
 .firebaserc
 build/
 firebase.json
+
+# Private mental notes (not tracked by Git)
+NOTES.md
+.notes/
