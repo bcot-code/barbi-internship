@@ -933,6 +933,42 @@ header:not(.header-mobile) #mainmenu > li:hover ul.mega {
   float: left;
 }
 
+/* Arrows */
+.slider-arrows {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.slider-arrows button {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dots */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  gap: 8px;
+}
+
+.slider-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #ccc;
+  cursor: pointer;
+}
+
+.slider-dots button.active {
+  background: #6c5ce7;
+}
+
 header.header-mobile.header-light,
 header.header-mobile.header-light #menu-btn,
 header.header-mobile.header-light #menu-btn:hover {
@@ -1358,6 +1394,134 @@ footer a {
 
 .de-navbar-left .subfooter {
   background: none;
+}
+
+.keen-slider {
+  overflow: hidden;
+  position: relative;
+}
+
+.keen-slider__slide {
+  min-width: 0;
+}
+
+/* Slider Container */
+.slider-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Slider Arrows */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.slider-arrow:hover {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow-prev {
+  left: -20px;
+}
+
+.slider-arrow-next {
+  right: -20px;
+}
+
+.arrow-icon {
+  font-size: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Slider Dots */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 10px 0;
+}
+
+.slider-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ddd;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-dots .dot:hover {
+  background-color: #bbb;
+}
+
+.slider-dots .dot.active {
+  background-color: #007bff;
+  transform: scale(1.2);
+}
+
+/* Responsive adjustments for arrows */
+@media (max-width: 1200px) {
+  .slider-arrow-prev {
+    left: -15px;
+  }
+  
+  .slider-arrow-next {
+    right: -15px;
+  }
+  
+  .slider-arrow {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 991px) {
+  .slider-arrow {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .arrow-icon {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 575px) {
+  .slider-arrow {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .arrow-icon {
+    font-size: 14px;
+  }
+}
+
+.nft_coll{
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.loaded .nft_coll{
+  opacity: 1;
 }
 
 header.side-header {
@@ -15145,7 +15309,7 @@ a.btn-slider:hover {
   margin: 0 6px;
   display: inline-block;
   zoom: 1;
-  *display: inline;
+  display: inline;
 }
 
 .testi-slider .flex-control-paging li a {
@@ -15279,6 +15443,14 @@ a.btn-slider:hover {
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
   border-right: 10px solid blue;
+}
+@keyframes loading {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
 
 blockquote.very-big {
@@ -16651,11 +16823,14 @@ img {
 }
 
 .skeleton-box {
-  display: inline-block;
-  height: 1em;
+  display: block;
+  width: 100%;
+  height: 260px;
+  border-radius: 12px;
   position: relative;
   overflow: hidden;
-  background-color: #dddbdd;
+  background-color: #ececec;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .skeleton-box::after {
@@ -16686,6 +16861,27 @@ img {
     transform: translateX(100%);
   }
 }
+.loaded .skeleton-box::after {
+  animation: none;
+  opacity: 0;
+}
+
+.keen-slider__slide:nth-child(1) .skeleton-box::after {
+  animation-delay: 0s;
+}
+
+.keen-slider__slide:nth-child(2) .skeleton-box::after {
+  animation-delay: 0.2s;
+}
+
+.keen-slider__slide:nth-child(3) .skeleton-box::after {
+  animation-delay: 0.4s;
+}
+
+.keen-slider__slide:nth-child(4) .skeleton-box::after {
+  animation-delay: 0.6s;
+}
+
 
 .nft-image {
   height: 100%;
