@@ -1,19 +1,41 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
 
-const AuthorItems = () => {
+const AuthorItems = ({authorId}) => {
+
+  const [authors, setAuthors] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() =>{
+    const fetchAuthors = async () => {
+      try{
+        const {data} = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems`);
+        setAuthors(data);
+      }
+      catch(err) {
+        console.error("Failed to fetch NFT");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAuthors();
+  },[authorId]);
+  console.log("Author Id:", authorId)
+
+  if (loading) return <p>Loading...</p>;
+  if (!authors) return <p>Item not found</p>;
+
   return (
     <div className="de_tab_content">
       <div className="tab-1">
         <div className="row">
-          {new Array(8).fill(0).map((_, index) => (
+          {authors.map((author, index) => (
             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link to="">
-                    <img className="lazy" src={AuthorImage} alt="" />
+                    <img className="lazy" src={author.authorImage} alt={author.title} />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
@@ -37,7 +59,7 @@ const AuthorItems = () => {
                   </div>
                   <Link to="/item-details">
                     <img
-                      src={nftImage}
+                      src={author.nftImage}
                       className="lazy nft__item_preview"
                       alt=""
                     />
