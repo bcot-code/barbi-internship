@@ -14304,17 +14304,24 @@ a.read_more i {
 
 .de_countdown {
   position: absolute;
-  right: 20px;
+  top: 12px;
+  right: 15px;
   background: #ffffff;
-  padding: 1px 10px;
+  padding: 6px 14px;
   border-radius: 30px;
-  -moz-border-radius: 30px;
-  -webkit-border-radius: 30px;
-  border: solid 2px #dddddd;
-  z-index: 100;
+  border: 2px solid #7b61ff;
   color: #0d0c22;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap; /* 🔑 prevents vertical stacking */
+  z-index: 100;
 }
-
+.de_countdown::before,
+.de_countdown::after {
+  display: none !important;
+  content: none !important;
+}
 .de_countdown.bg-color-secondary {
   border: none;
 }
