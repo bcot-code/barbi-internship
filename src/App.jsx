@@ -8,6 +8,7 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // You can also use <link> for styles
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/item-details/:nftId" element={<ItemDetails />} />
       </Routes>
       <Footer />
+      <SpeedInsights />
     </Router>
   );
 }
