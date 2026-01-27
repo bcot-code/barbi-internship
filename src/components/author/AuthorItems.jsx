@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import Skeleton from "../UI/Skeleton";
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 
 const AuthorItems = ({authorId}) => {
   const [items, setItems] = useState([]);
@@ -30,6 +33,11 @@ const AuthorItems = ({authorId}) => {
   )
 
   useEffect(() => {
+    AOS.init({
+    duration: 800,
+    easing: "ease-out-cubic",
+    once: true,
+    });
     const fetchAuthorItems = async () => {
       try{
         console.log("Fetching items for author ID:", authorId);
@@ -38,6 +46,9 @@ const AuthorItems = ({authorId}) => {
         console.log("Fetched author items:", data);
         console.log("NFT Collection:", data.nftCollection);
         setItems(data.nftCollection || []);
+        setTimeout(() => {
+        AOS.refresh();
+        }, 100);
       } catch(err){
         console.error("Error fetching author items:", err);
       } finally{
@@ -49,18 +60,20 @@ const AuthorItems = ({authorId}) => {
     if (authorId) {
       fetchAuthorItems();
     }
+    
   }, [authorId]);
 
 
   if (loading) {
     return (
-      <div className="keen-slider">
-        {[...Array(4)].map((_, i) => (
-          <div className="keen-slider__slide" key={i}>
-            <Skeleton width="100%" height="250px" />
-          </div>
-        ))}
+      <div
+        className="col-lg-3 col-md-6"
+        key="skeleton"
+        data-aos="fade"
+      >
+        <Skeleton width="100%" height="250px" />
       </div>
+
     );
   }
 
@@ -69,20 +82,26 @@ const AuthorItems = ({authorId}) => {
       <div className="tab-1">
         <div className="slider-container">
           <div ref={sliderRef} className="keen-slider">
-            {items.map((item) => (
-              <div className="keen-slider__slide" key={item.id}>
+            {items.map((item, index) => (
+              <div
+                className="keen-slider__slide"
+                key={item.id || index}
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+              >
                 <div className="nft__item">
                   <div className="author_list_pp">
                     <Link to="">
-                      <img 
+                      <img
                         className="img-fluid"
                         loading="lazy"
-                        src={item.nftImage} 
-                        alt={item.title} 
+                        src={item.nftImage}
+                        alt={item.title}
                       />
                       <i className="fa fa-check"></i>
                     </Link>
                   </div>
+
                   <div className="nft__item_wrap">
                     <div className="nft__item_extra">
                       <div className="nft__item_buttons">
@@ -101,6 +120,7 @@ const AuthorItems = ({authorId}) => {
                         </div>
                       </div>
                     </div>
+
                     <Link to={`/item-details/${item.nftId}`}>
                       <img
                         src={item.nftImage}
@@ -110,6 +130,7 @@ const AuthorItems = ({authorId}) => {
                       />
                     </Link>
                   </div>
+
                   <div className="nft__item_info">
                     <Link to={`/item-details/${item.nftId}`}>
                       <h4>{item.title}</h4>
@@ -123,6 +144,7 @@ const AuthorItems = ({authorId}) => {
                 </div>
               </div>
             ))}
+
           </div>
           <div className="slider-arrows">
             <button onClick={() => instanceRef.current?.prev()}>

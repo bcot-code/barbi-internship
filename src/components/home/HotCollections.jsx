@@ -4,6 +4,7 @@ import axios from "axios"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import Skeleton from "../UI/Skeleton"
+import AOS from "aos"
 
 
  
@@ -27,6 +28,7 @@ const HotCollections = () => {
     finally {
       setLoading(false)
     }
+    AOS.refresh();
   }
 
   // Slider configuration
@@ -85,7 +87,7 @@ const HotCollections = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <div className="text-center">
+            <div className="text-center" data-aos="fade-up">
               <h2>Hot Collections</h2>
               <div className="small-border bg-color-2"></div>
             </div>
@@ -95,7 +97,10 @@ const HotCollections = () => {
             <div className="slider-container">
               <div ref={sliderRef} className="keen-slider">
                 {collections.map((item, index) => (
-                  <div className="keen-slider__slide" key={index}>
+                  <div className="keen-slider__slide"
+                    key={index}
+                    data-aos="fade-up"
+                    data-aos-delay={index * 100}>
                     <div className="nft_coll">
                       <div className="nft_wrap">
                         <Link to="/item-details">

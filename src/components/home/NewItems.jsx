@@ -5,6 +5,7 @@ import Skeleton from "../UI/Skeleton";
 import Countdown from "../UI/Countdown";
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
+import AOS from "aos";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
@@ -26,6 +27,7 @@ const NewItems = () => {
         setLoading(false)
       }, 1100);
     }
+    AOS.refresh();
   }
 
   // Slider configuration
@@ -85,7 +87,7 @@ const NewItems = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <div className="text-center">
+            <div className="text-center" data-aos="fade-up">
               <h2>New Items</h2>
               <div className="small-border bg-color-2"></div>
             </div>
@@ -93,10 +95,12 @@ const NewItems = () => {
           <section className="col-lg-12">
             <div className="slider-container">
               <div ref={sliderRef} className="keen-slider">
-                {items.map((item) => (
+                {items.map((item, index) => (
                   <div
                     className="keen-slider__slide"
                     key={item.id}
+                    data-aos="fade-up"
+                    data-aos-delay={index * 120}
                   >
                     <div className="nft__item">
                       <div className="author_list_pp">
