@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton"
 // import AuthorImage from "../../images/author_thumbnail.jpg";
+import AOS from "aos";
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
@@ -14,6 +15,9 @@ const TopSellers = () => {
       console.log("API Data:", data)
       console.log("First item ID:", data[0]?.id)
       setSellers(data)
+      setTimeout(() => {
+        AOS.refresh();
+      }, 100);
     } catch (error) {
       console.error("Error fetching sellers:", error)
     } finally{
@@ -32,7 +36,7 @@ const TopSellers = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <div className="text-center">
+            <div className="text-center" data-aos="fade-up">
               <h2>Top Sellers</h2>
               <div className="small-border bg-color-2"></div>
             </div>
@@ -42,7 +46,7 @@ const TopSellers = () => {
             {loading
               ?
               [...Array(12)].map((_, i) =>(
-                <li key={i} className="d-flex align-items-center mb-4">
+                <li key={i} className="d-flex align-items-center mb-4" data-aos="fade-up" data-aos-delay={i * 60}>
                   {/* avatar */}
                   <Skeleton 
                     width="50px"
@@ -66,8 +70,10 @@ const TopSellers = () => {
                   </div>
                 </li>
               )) :
-              sellers.map((seller, id) => (
-                <li key={id}>
+              sellers.map((seller, index) => (
+                <li key={seller.id}
+                      data-aos="fade-up"
+                      data-aos-delay={index * 80}>
                   <div className="author_list_pp">
                     <Link to={`/author/${seller.authorId}`}>
                       <img
