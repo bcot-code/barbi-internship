@@ -103,7 +103,7 @@ const HotCollections = () => {
                     data-aos-delay={index * 100}>
                     <div className="nft_coll">
                       <div className="nft_wrap">
-                        <Link to="/item-details">
+                        <Link to={`/item-details/${item.nftId}`}>
                           <img
                             src={item.nftImage}
                             loading="lazy"
@@ -116,7 +116,7 @@ const HotCollections = () => {
                         </Link>
                       </div>
                       <div className="nft_coll_pp">
-                        <Link to="/author">
+                        <Link to={`/author/${item.authorId}`}>
                           <img
                             className="lazy pp-coll"
                             loading="lazy"
