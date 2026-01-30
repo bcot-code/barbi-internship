@@ -130,9 +130,11 @@ useEffect(() => {
                   </div>
                 </div>
                 <div className="nft__item_wrap position-relative">
-                  <div className="de_countdown">
+                  {select.expiryDate && (
+                    <div className="de_countdown">
                     <Countdown expiryDate={select.expiryDate} />
                   </div>
+                  )}
                   <Link to={`/item-details/${select.nftId}`}>
                     <img 
                       src={select.nftImage} 
