@@ -110,18 +110,21 @@ const NewItems = () => {
                           data-bs-placement="top"
                           title="Creator: Monica Lucas"
                         >
-                          <img 
+                          <img
                             className="img-fluid"
-                            loading="lazy" 
-                            src={item.nftImage} 
+                            loading="lazy"
+                            src={item.nftImage}
                             alt={item.title}
                             />
                           <i className="fa fa-check"></i>
                         </Link>
                       </div>
-                      <Countdown expiryDate={item.expiryDate} />
-
-                      <div className="nft__item_wrap">
+                      <div className="nft__item_wrap position-relative" style={{ zIndex: 2 }}>
+                        {item.expiryDate && new Date(item.expiryDate) > new Date() && (
+                          <div className="de_countdown">
+                            <Countdown expiryDate={item.expiryDate} />
+                          </div>
+                        )}
                         <div className="nft__item_extra">
                           <div className="nft__item_buttons">
                             <button>Buy Now</button>
