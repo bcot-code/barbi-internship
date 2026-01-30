@@ -110,10 +110,10 @@ const NewItems = () => {
                           data-bs-placement="top"
                           title="Creator: Monica Lucas"
                         >
-                          <img 
+                          <img
                             className="img-fluid"
-                            loading="lazy" 
-                            src={item.nftImage} 
+                            loading="lazy"
+                            src={item.nftImage}
                             alt={item.title}
                             />
                           <i className="fa fa-check"></i>
