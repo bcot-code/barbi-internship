@@ -119,12 +119,11 @@ const NewItems = () => {
                           <i className="fa fa-check"></i>
                         </Link>
                       </div>
-                      <div className="nft__item_wrap position-relative" style={{ zIndex: 2 }}>
-                        {item.expiryDate && new Date(item.expiryDate) > new Date() && (
-                          <div className="de_countdown">
-                            <Countdown expiryDate={item.expiryDate} />
-                          </div>
-                        )}
+                      {item.expiryDate && new Date(item.expiryDate) > new Date() && (
+                          <Countdown expiryDate={item.expiryDate} />
+                      )}
+
+                      <div className="nft__item_wrap">
                         <div className="nft__item_extra">
                           <div className="nft__item_buttons">
                             <button>Buy Now</button>
