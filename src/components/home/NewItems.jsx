@@ -115,6 +115,7 @@ const NewItems = () => {
                           <i className="fa fa-check"></i>
                         </Link>
                       </div>
+                      {/* Countdown */}
                       {item.expiryDate && new Date(item.expiryDate) > new Date() && (
                           <Countdown expiryDate={item.expiryDate} />
                       )}
