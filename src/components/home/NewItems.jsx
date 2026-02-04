@@ -119,11 +119,6 @@ const NewItems = () => {
                           <i className="fa fa-check"></i>
                         </Link>
                       </div>
-                      {/* Countdown */}
-                      {item.expiryDate && new Date(item.expiryDate) > new Date() && (
-                          <Countdown expiryDate={item.expiryDate} />
-                      )}
-
                       <div className="nft__item_wrap">
                         <div className="nft__item_extra">
                           <div className="nft__item_buttons">
@@ -142,15 +137,21 @@ const NewItems = () => {
                             </div>
                           </div>
                         </div>
-
-                        <Link to={`/item-details/${item.nftId}`}>
-                          <img
-                            src={item.nftImage} 
-                            className="lazy nft__item_preview"
-                            alt={item.title}
-                            loading="lazy"
-                          />
-                        </Link>
+                        <div className="nft__item_wrap position-relative">
+                          {item.expiryDate && new Date(item.expiryDate) > new Date() && (
+                            <div className="de_countdown">
+                              <Countdown expiryDate={item.expiryDate} />
+                            </div>
+                          )}
+                          <Link to={`/item-details/${item.nftId}`}>
+                            <img
+                              src={item.nftImage} 
+                              className="lazy nft__item_preview"
+                              alt={item.title}
+                              loading="lazy"
+                            />
+                          </Link>
+                        </div>
                       </div>
                       <div className="nft__item_info">
                         <Link to={`/item-details/${item.nftId}`}>
