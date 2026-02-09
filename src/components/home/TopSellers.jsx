@@ -5,6 +5,7 @@ import Skeleton from "../UI/Skeleton"
 // import AuthorImage from "../../images/author_thumbnail.jpg";
 import AOS from "aos";
 
+// This component fetches and displays the top sellers in a section. It shows a loading skeleton while fetching data and then renders the list of sellers with their images, names, and prices. Each seller's name and image link to their respective author page.
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
   const [loading, setLoading] = useState(true);
