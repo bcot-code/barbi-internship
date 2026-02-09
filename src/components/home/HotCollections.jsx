@@ -6,7 +6,7 @@ import { useKeenSlider } from "keen-slider/react"
 import Skeleton from "../UI/Skeleton"
 
 
- 
+ // This component fetches and displays hot collections in a slider format. It handles loading and error states, and uses the Keen Slider library for the carousel functionality.
 const HotCollections = () => {
   const [collections, setCollections] = useState([])
   const [loading, setLoading] = useState(true)
