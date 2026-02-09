@@ -4,9 +4,10 @@ import axios from "axios"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import Skeleton from "../UI/Skeleton"
+import AOS from "aos"
 
 
- 
+ // This component fetches and displays hot collections in a slider format. It handles loading and error states, and uses the Keen Slider library for the carousel functionality.
 const HotCollections = () => {
   const [collections, setCollections] = useState([])
   const [loading, setLoading] = useState(true)
@@ -27,6 +28,7 @@ const HotCollections = () => {
     finally {
       setLoading(false)
     }
+    AOS.refresh();
   }
 
   // Slider configuration
@@ -85,7 +87,7 @@ const HotCollections = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <div className="text-center">
+            <div className="text-center" data-aos="fade-up">
               <h2>Hot Collections</h2>
               <div className="small-border bg-color-2"></div>
             </div>
@@ -95,10 +97,13 @@ const HotCollections = () => {
             <div className="slider-container">
               <div ref={sliderRef} className="keen-slider">
                 {collections.map((item, index) => (
-                  <div className="keen-slider__slide" key={index}>
+                  <div className="keen-slider__slide"
+                    key={index}
+                    data-aos="fade-up"
+                    data-aos-delay={index * 100}>
                     <div className="nft_coll">
                       <div className="nft_wrap">
-                        <Link to="/item-details">
+                        <Link to={`/item-details/${item.nftId}`}>
                           <img
                             src={item.nftImage}
                             loading="lazy"
@@ -111,7 +116,7 @@ const HotCollections = () => {
                         </Link>
                       </div>
                       <div className="nft_coll_pp">
-                        <Link to="/author">
+                        <Link to={`/author/${item.authorId}`}>
                           <img
                             className="lazy pp-coll"
                             loading="lazy"

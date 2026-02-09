@@ -26,7 +26,7 @@ const Countdown = ({expiryDate}) => {
         return() => clearInterval(timer); 
     }, [expiryDate]);
 
-    return <div className="de_countdown">{timeLeft}</div>
+    return <span>{timeLeft}</span>
     
 }
 export default Countdown;

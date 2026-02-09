@@ -5,7 +5,9 @@ import Skeleton from "../UI/Skeleton";
 import Countdown from "../UI/Countdown";
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
+import AOS from "aos";
 
+// Component to display new items in a slider format. Fetches data from an API and handles loading and error states.
 const NewItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +28,7 @@ const NewItems = () => {
         setLoading(false)
       }, 1100);
     }
+    AOS.refresh();
   }
 
   // Slider configuration
@@ -85,7 +88,7 @@ const NewItems = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <div className="text-center">
+            <div className="text-center" data-aos="fade-up">
               <h2>New Items</h2>
               <div className="small-border bg-color-2"></div>
             </div>
@@ -93,10 +96,12 @@ const NewItems = () => {
           <section className="col-lg-12">
             <div className="slider-container">
               <div ref={sliderRef} className="keen-slider">
-                {items.map((item) => (
+                {items.map((item, index) => (
                   <div
                     className="keen-slider__slide"
                     key={item.id}
+                    data-aos="fade-up"
+                    data-aos-delay={index * 120}
                   >
                     <div className="nft__item">
                       <div className="author_list_pp">
@@ -106,17 +111,15 @@ const NewItems = () => {
                           data-bs-placement="top"
                           title="Creator: Monica Lucas"
                         >
-                          <img 
+                          <img
                             className="img-fluid"
-                            loading="lazy" 
-                            src={item.nftImage} 
+                            loading="lazy"
+                            src={item.nftImage}
                             alt={item.title}
                             />
                           <i className="fa fa-check"></i>
                         </Link>
                       </div>
-                      <Countdown expiryDate={item.expiryDate} />
-
                       <div className="nft__item_wrap">
                         <div className="nft__item_extra">
                           <div className="nft__item_buttons">
@@ -135,15 +138,21 @@ const NewItems = () => {
                             </div>
                           </div>
                         </div>
-
-                        <Link to={`/item-details/${item.nftId}`}>
-                          <img
-                            src={item.nftImage} 
-                            className="lazy nft__item_preview"
-                            alt={item.title}
-                            loading="lazy"
-                          />
-                        </Link>
+                        <div className="nft__item_wrap position-relative">
+                          {item.expiryDate && new Date(item.expiryDate) > new Date() && (
+                            <div className="de_countdown">
+                              <Countdown expiryDate={item.expiryDate} />
+                            </div>
+                          )}
+                          <Link to={`/item-details/${item.nftId}`}>
+                            <img
+                              src={item.nftImage} 
+                              className="lazy nft__item_preview"
+                              alt={item.title}
+                              loading="lazy"
+                            />
+                          </Link>
+                        </div>
                       </div>
                       <div className="nft__item_info">
                         <Link to={`/item-details/${item.nftId}`}>
