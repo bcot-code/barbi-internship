@@ -7,6 +7,7 @@ import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import AOS from "aos";
 
+// Component to display new items in a slider format. Fetches data from an API and handles loading and error states.
 const NewItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
