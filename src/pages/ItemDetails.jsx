@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams} from "react-router-dom";
 import EthereumIcon from "../images/ethereum.svg";
+import Skeleton from "../components/UI/Skeleton";
 
 
 const ItemDetails = () => {
@@ -20,15 +21,16 @@ const ItemDetails = () => {
       catch(err) {
         console.error("Failed to fetch NFT");
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2500);
       }
     };
     fetchItem();
     window.scrollTo(0, 0);
   },[nftId]);
 
-  if (loading) return <p>Loading...</p>;
-  if (!item) return <p>Item not found</p>;
+  
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
@@ -36,6 +38,11 @@ const ItemDetails = () => {
         <section aria-label="section" className="mt90 sm-mt-0">
           <div className="container">
             <div className="row">
+            {loading ? (
+              <div className="col-md-6">
+                <Skeleton width="100%" height="400px" borderRadius="12px" />
+              </div>
+            ) : (
               <div className="col-md-6 text-center">
                 <img
                   src={item.nftImage}
@@ -43,6 +50,47 @@ const ItemDetails = () => {
                   alt={item.title}
                 />
               </div>
+            )}
+
+            {loading ? (
+              <div className="col-md-6">
+                <div className="item_info">
+                  <Skeleton width="60%" height="32px" borderRadius="8px" />
+                  <div className="spacer-20"></div>
+                  <div className="d-flex">
+                    <Skeleton width="80px" height="24px" borderRadius="4px" />
+                    <div className="mr20"></div>
+                    <Skeleton width="80px" height="24px" borderRadius="4px" />
+                  </div>
+                  <div className="spacer-20"></div>
+                  <Skeleton width="100%" height="80px" borderRadius="8px" />
+                  <div className="spacer-30"></div>
+                  <Skeleton width="120px" height="20px" borderRadius="4px" />
+                  <div className="spacer-20"></div>
+                  <div className="d-flex align-items-center">
+                    <Skeleton width="48px" height="48px" borderRadius="50%" />
+                    <div className="mr15"></div>
+                    <Skeleton width="150px" height="20px" borderRadius="4px" />
+                  </div>
+                  <div className="spacer-30"></div>
+                  <Skeleton width="120px" height="20px" borderRadius="4px" />
+                  <div className="spacer-20"></div>
+                  <div className="d-flex align-items-center">
+                    <Skeleton width="48px" height="48px" borderRadius="50%" />
+                    <div className="mr15"></div>
+                    <Skeleton width="150px" height="20px" borderRadius="4px" />
+                  </div>
+                  <div className="spacer-30"></div>
+                  <Skeleton width="120px" height="20px" borderRadius="4px" />
+                  <div className="spacer-15"></div>
+                  <div className="nft-item-price d-flex align-items-center">
+                    <Skeleton width="24px" height="24px" borderRadius="4px" />
+                    <div className="mr10"></div>
+                    <Skeleton width="80px" height="24px" borderRadius="4px" />
+                  </div>
+                </div>
+              </div>
+            ) : (
               <div className="col-md-6">
                 <div className="item_info">
                   <h2>{item.title}#{item.tag}</h2>
@@ -101,6 +149,7 @@ const ItemDetails = () => {
                   </div>
                 </div>
               </div>
+            )}
             </div>
           </div>
         </section>
