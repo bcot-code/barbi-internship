@@ -13826,13 +13826,14 @@ a.read_more i {
 }
 
 .nft__item_wrap {
-  width: 100%;
+width: 100%;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   height: 350px;
+  overflow: hidden;
 }
 
 .nft__item_wrap a {
